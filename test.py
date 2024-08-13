@@ -8,9 +8,9 @@ from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
 import time 
 
-train_cfg = IrisTrainCfg()
+train_cfg = IrisTrainCfg(); train_cfg.device = 'cpu'
 learner = Learner(train_cfg)
-test_dataset = CSVDataset(os.path.join(train_cfg.dataset.dataset_path, 'test'))
+test_dataset = CSVDataset(os.path.join(train_cfg.dataset.dataset_path, 'validate'))
 learner.data_loaders['test'] = DataLoader(
     test_dataset, 
     batch_size=len(test_dataset), 
@@ -24,10 +24,11 @@ with torch.no_grad():
         inputs, labels = data['input'].to(learner.device), data['label'].to(learner.device)
         
         start_time = time.time()
-        predicts = learner.model(inputs)
+        learner.model(inputs[0:1, :])
         end_time = time.time()
-        
-        print(f"Time taken for computation: {((end_time - start_time)/len(test_dataset))/1e-3} milliseconds")
+        predicts = learner.model(inputs)
+
+        print(f"Time taken for computation: {(end_time - start_time)/1e-3} milliseconds")
 
         predicts = (predicts >= 0.5).long()
 
