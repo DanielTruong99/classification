@@ -1,6 +1,6 @@
 import torch 
 from learning import Learner
-from train_radar_cfg import RadarTrainCfg
+from scripts.radar.train_radar_cfg import RadarTrainCfg
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 import os 
 from learning.dataset import CSVDataset

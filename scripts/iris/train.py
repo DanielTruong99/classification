@@ -1,6 +1,6 @@
 from learning import Learner
-from train_cfg import IrisTrainCfg
-from train_radar_cfg import RadarTrainCfg
+from scripts.iris.train_cfg import IrisTrainCfg
+from scripts.radar.train_radar_cfg import RadarTrainCfg
 
 # train_cfg = IrisTrainCfg()
 train_cfg = RadarTrainCfg()

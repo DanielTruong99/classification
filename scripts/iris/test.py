@@ -1,6 +1,6 @@
 import torch 
 from learning import Learner
-from train_cfg import IrisTrainCfg
+from scripts.iris.train_cfg import IrisTrainCfg
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 import os 
 from learning.dataset import CSVDataset
