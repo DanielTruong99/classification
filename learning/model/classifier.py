@@ -19,9 +19,10 @@ class Classifier(torch.nn.Module):
             if index == len(architecture) - 1:
                 break
             
-            pre_process = getattr(torch.nn, layer['pre_process']) if 'pre_process' in layer or index == 0 else None
-            if pre_process is not None:
-                layers.append(pre_process(architecture[index - 1]['hidden_dimension']))
+            if 'pre_process' in layer:
+                pre_process = getattr(torch.nn, layer['pre_process']) if 'pre_process' in layer or index == 0 else None
+                if pre_process is not None:
+                    layers.append(pre_process(architecture[index - 1]['hidden_dimension']))
 
             dense_layer = torch.nn.Linear(layer['hidden_dimension'], architecture[index + 1]['hidden_dimension'])
             layers.append(dense_layer)

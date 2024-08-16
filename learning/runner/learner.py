@@ -55,19 +55,18 @@ class Learner:
         best_vloss = 1_000_000. 
 
         for epoch in range(self.cfg.optimizer.epochs):
-            print('Epoch {}:'.format(epoch_number + 1))
+            print('Epoch {}/{}'.format(epoch_number + 1, self.cfg.optimizer.epochs))
 
             #* Make sure gradient tracking is on, and do a pass over the data
             self.model.train(True)
             avg_loss = self.train_one_epoch(epoch_number, self.writer)
 
-
-            running_vloss = 0.0
             #! Set the model to evaluation mode, disabling dropout and using population
             #! statistics for batch normalization.
             self.model.eval()
 
             #* Disable gradient computation and reduce memory consumption.
+            running_vloss = 0.0
             with torch.no_grad():
                 for index, vdata in enumerate(self.data_loaders['val']):
                     vinputs, vlabels = vdata['input'], vdata['label']
@@ -75,9 +74,7 @@ class Learner:
                     voutputs = self.model(vinputs)
                     vloss = self.criterion(voutputs, vlabels)
                     running_vloss += vloss
-
             avg_vloss = running_vloss / (index + 1)
-            # print('Loss train {} valid {}'.format(avg_loss, avg_vloss))
 
             #* Log the running loss averaged per batch
             #* for both training and validation
@@ -114,16 +111,17 @@ class Learner:
             #* Adjust learning weights
             self.optimizer.step()
 
-            # Gather data and report
+            #* Gather data and report
             running_loss += loss.item()
             # if index % 100 == 99:
-            last_loss = running_loss / 1 # loss per batch
+            # last_loss = running_loss / 1 # loss per batch
             # print('  batch {} loss: {}'.format(index + 1, last_loss))
-            tb_x = epoch_index * len(self.data_loaders['train']) + index + 1
-            tb_writer.add_scalar('Loss/train', last_loss, tb_x)
-            running_loss = 0.
+            # tb_x = epoch_index * len(self.data_loaders['train']) + index + 1
+            # tb_writer.add_scalar('Loss/train', last_loss, tb_x)
+            # running_loss = 0.
 
-        return last_loss
+        avg_vloss = running_loss / (index + 1)
+        return avg_vloss
 
     def test(self, test_loader):
         raise NotImplementedError
