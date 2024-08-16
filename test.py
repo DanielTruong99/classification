@@ -10,7 +10,7 @@ import time
 
 train_cfg = IrisTrainCfg(); train_cfg.device = 'cpu'
 learner = Learner(train_cfg)
-test_dataset = CSVDataset(os.path.join(train_cfg.dataset.dataset_path, 'validate'))
+test_dataset = CSVDataset(os.path.join(train_cfg.dataset.dataset_path, 'validate'), train_cfg.dataset.test)
 learner.data_loaders['test'] = DataLoader(
     test_dataset, 
     batch_size=len(test_dataset), 

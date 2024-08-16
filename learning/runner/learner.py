@@ -18,17 +18,17 @@ class Learner:
 
         self.data_loaders = {
             'train': DataLoader(
-                CSVDataset(os.path.join(self.cfg.dataset.dataset_path, 'train')), 
+                CSVDataset(os.path.join(self.cfg.dataset.dataset_path, 'train'), self.cfg.dataset.train), 
                 batch_size=self.cfg.dataset.train.batch_size, 
                 shuffle=self.cfg.dataset.train.is_shuffle
             ),
             'val': DataLoader(
-                CSVDataset(os.path.join(self.cfg.dataset.dataset_path, 'validate')), 
+                CSVDataset(os.path.join(self.cfg.dataset.dataset_path, 'validate'), self.cfg.dataset.val), 
                 batch_size=self.cfg.dataset.val.batch_size, 
                 shuffle=self.cfg.dataset.val.is_shuffle
             ),
             'test': DataLoader(
-                CSVDataset(os.path.join(self.cfg.dataset.dataset_path, 'test')), 
+                CSVDataset(os.path.join(self.cfg.dataset.dataset_path, 'test'), self.cfg.dataset.test), 
                 batch_size=self.cfg.dataset.test.batch_size, 
                 shuffle=self.cfg.dataset.test.is_shuffle
             ),
