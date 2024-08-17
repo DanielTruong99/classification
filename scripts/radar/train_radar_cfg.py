@@ -20,10 +20,8 @@ class CriticCfg:
     output_dimension: int = 1
     architecture: List[Dict] = [
         # {"hidden_dimension": 32, "activation": "elu", "pre_process": "BatchNorm1d"}, 
-        {"hidden_dimension": 32, "activation": "elu"}, 
-        {"hidden_dimension": 32, "activation": "elu"}, 
-        {"hidden_dimension": 32, "activation": "elu"}, 
-        {"hidden_dimension": 32, "activation": "elu"}, 
+        {"hidden_dimension": 512, "activation": "elu", "pre_process": "BatchNorm1d"}, 
+        {"hidden_dimension": 256, "activation": "elu", "pre_process": "BatchNorm1d"}, 
     ]
 
 class OptimizerCfg:

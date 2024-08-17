@@ -16,7 +16,7 @@ learner.data_loaders['test'] = DataLoader(
     batch_size=len(test_dataset), 
     shuffle=False
 )
-learner.model.load_state_dict(torch.load('logs/colision_classifier_20240817_011305/model_20240817_011305_660', map_location=learner.device))
+learner.model.load_state_dict(torch.load('logs/colision_classifier_20240817_155006/model_20240817_155006_9216', map_location=learner.device))
 
 with torch.no_grad():
     learner.model.eval()
@@ -30,7 +30,7 @@ with torch.no_grad():
 
         print(f"Time taken for computation in {train_cfg.device}: {(end_time - start_time)/1e-3} milliseconds")
 
-        predicts = (predicts >= 0.7).long()
+        predicts = (predicts >= 0.33).long()
 
         cm = confusion_matrix(labels.cpu().numpy(), predicts.cpu().numpy())
 

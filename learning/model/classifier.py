@@ -22,7 +22,7 @@ class Classifier(torch.nn.Module):
             if 'pre_process' in layer:
                 pre_process = getattr(torch.nn, layer['pre_process']) if 'pre_process' in layer or index == 0 else None
                 if pre_process is not None:
-                    layers.append(pre_process(architecture[index - 1]['hidden_dimension']))
+                    layers.append(pre_process(architecture[index]['hidden_dimension']))
 
             dense_layer = torch.nn.Linear(layer['hidden_dimension'], architecture[index + 1]['hidden_dimension'])
             layers.append(dense_layer)
@@ -53,8 +53,7 @@ class Classifier(torch.nn.Module):
         elif act_name == "sigmoid":
             return nn.Sigmoid()
         else:
-            print("invalid activation function!")
-            return None
+            raise NotImplementedError
             
     def forward(self, x):
         logits = self.critic(x)
