@@ -93,12 +93,18 @@ class Learner:
     
     def train_one_epoch(self):
         running_loss = 0.
+        has_visualized_graph = True
         for index, data in enumerate(self.data_loaders['train']):
             inputs, labels = data['input'], data['label']
             inputs, labels = inputs.to(self.device), labels.to(self.device)
 
             #* Zero your gradients for every batch!
             self.optimizer.zero_grad()
+
+            #* Visualize the graph once
+            if has_visualized_graph:
+                has_visualized_graph = False
+                self.writer.add_graph(self.model, inputs)
 
             #* Make predictions for this batch
             outputs = self.model(inputs)

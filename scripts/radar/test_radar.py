@@ -7,6 +7,7 @@ from learning.dataset import CSVDataset
 from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
 import time 
+import pandas as pd
 
 train_cfg = RadarTrainCfg(); train_cfg.device = 'cpu'
 learner = Learner(train_cfg)
@@ -16,7 +17,7 @@ learner.data_loaders['test'] = DataLoader(
     batch_size=len(test_dataset), 
     shuffle=False
 )
-learner.model.load_state_dict(torch.load('logs/colision_classifier_20240817_155006/model_20240817_155006_9216', map_location=learner.device))
+learner.model.load_state_dict(torch.load('logs/colision_classifier_20240818_113814/model_20240818_113814_4478', map_location=learner.device))
 
 with torch.no_grad():
     learner.model.eval()
@@ -30,9 +31,18 @@ with torch.no_grad():
 
         print(f"Time taken for computation in {train_cfg.device}: {(end_time - start_time)/1e-3} milliseconds")
 
-        predicts = (predicts >= 0.33).long()
+        predicts = (predicts >= 0.5).long()
+
+        wrong_predictions_index = torch.where(predicts != labels)[0]
+        wrong_inputs = inputs[wrong_predictions_index, :]
+        wrong_true_labels = labels[wrong_predictions_index]
+        wrong_predicted_labels = predicts[wrong_predictions_index]
+        wrong_predictions = torch.cat([wrong_inputs, wrong_true_labels.unsqueeze(1), wrong_predicted_labels.unsqueeze(1)], dim=1)
 
         cm = confusion_matrix(labels.cpu().numpy(), predicts.cpu().numpy())
+
+df = pd.DataFrame(wrong_predictions.cpu().numpy(), columns=['Distance', 'Angle', 'Velocity', 'Labels', 'Predictions'])
+df.to_csv('wrong_predictions.csv', index=False)
 
 disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=[0, 1])
 disp.plot(cmap=plt.cm.Blues)
