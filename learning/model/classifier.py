@@ -13,6 +13,7 @@ class Classifier(torch.nn.Module):
         #* Add input layer
         layers.append(torch.nn.BatchNorm1d(cfg.input_dimension))
         layers.append(torch.nn.Linear(cfg.input_dimension, architecture[0]['hidden_dimension']))
+        layers.append(self._get_activation(architecture[0]['activation']))
         
         #* Add hidden layers
         for index, layer in enumerate(architecture):
@@ -32,6 +33,7 @@ class Classifier(torch.nn.Module):
                 layers.append(post_process) 
 
         #* Add output layer
+        layers.append(torch.nn.BatchNorm1d(architecture[-1]['hidden_dimension']))
         layers.append(torch.nn.Linear(architecture[-1]['hidden_dimension'], cfg.output_dimension))
 
         #* Initialize the critic

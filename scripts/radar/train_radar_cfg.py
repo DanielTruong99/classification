@@ -4,10 +4,10 @@ from learning.cfg import TrainCfg
 
 class DataSetCfg:
     class BaseDatasetCfg:
-        batch_size: int = 8192
+        batch_size: int = 128
         is_shuffle: bool = True
         num_workers: int = 4
-        input_data_index: List[int] = [0, 1, 2]
+        input_data_index: List[int] = [0, 2]
         label_data_index: List[int] = [3]
 
     dataset_path: str = 'dataset/radar'
@@ -16,7 +16,7 @@ class DataSetCfg:
     test: BaseDatasetCfg = BaseDatasetCfg()
 
 class CriticCfg:
-    input_dimension: int = 3
+    input_dimension: int = 2
     output_dimension: int = 1
     architecture: List[Dict] = [
         # {"hidden_dimension": 32, "activation": "elu", "pre_process": "BatchNorm1d"}, 
