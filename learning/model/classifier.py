@@ -42,21 +42,22 @@ class Classifier(torch.nn.Module):
             torch.nn.BatchNorm1d(cfg.input_dimension),
             torch.nn.Linear(cfg.input_dimension, 512),
             nn.ELU(),
-            # torch.nn.BatchNorm1d(512),
+            torch.nn.BatchNorm1d(512),
+
+            torch.nn.Linear(512, 512),
+            nn.ELU(),
+            torch.nn.BatchNorm1d(512),
 
             torch.nn.Linear(512, 256),
             nn.ELU(),
-            # torch.nn.BatchNorm1d(256),
+            torch.nn.BatchNorm1d(256),
 
             torch.nn.Linear(256, 256),
             nn.ELU(),
-            # torch.nn.BatchNorm1d(256),
-
-            torch.nn.Linear(256, 256),
-            nn.ELU(),
+            torch.nn.BatchNorm1d(256),
 
             nn.Linear(256, cfg.output_dimension),
-            # nn.Sigmoid()
+            nn.Sigmoid()
         ]
 
         #* Initialize the critic
