@@ -4,7 +4,7 @@ from learning.cfg import TrainCfg
 
 class DataSetCfg:
     class BaseDatasetCfg:
-        batch_size: int = 128
+        batch_size: int = 64
         is_shuffle: bool = True
         num_workers: int = 4
         input_data_index: List[int] = [0, 1, 2]
@@ -27,9 +27,10 @@ class CriticCfg:
     # ]
 
 class OptimizerCfg:
-    learning_rate: float = 1e-3
-    epochs: int = 10000
+    learning_rate: float = 1e-4
+    epochs: int = 1000
     optimizer: str = "Adam"
+    criterion: str = "MSE"
 
 class RadarTrainCfg(TrainCfg):
     model_name: str = 'colision_classifier'

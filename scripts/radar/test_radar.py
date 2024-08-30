@@ -17,7 +17,9 @@ learner.data_loaders['test'] = DataLoader(
     batch_size=len(test_dataset), 
     shuffle=False
 )
-learner.model.load_state_dict(torch.load('logs/colision_classifier_20240820_233543/model_20240820_233543_1253', map_location=learner.device))
+learner.model.load_state_dict(torch.load('logs/colision_classifier_20240830_151501/model_20240830_151501_96', map_location=learner.device))
+
+learner.model.eval()
 
 with torch.no_grad():
     learner.model.eval()
@@ -31,7 +33,7 @@ with torch.no_grad():
 
         print(f"Time taken for computation in {train_cfg.device}: {(end_time - start_time)/1e-3} milliseconds")
 
-        predicts = (predicts >= 0.33).long()
+        predicts = (predicts >= 0.5).long()
 
         wrong_predictions_index = torch.where(predicts != labels)[0]
         wrong_inputs = inputs[wrong_predictions_index, :]

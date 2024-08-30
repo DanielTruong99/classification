@@ -42,21 +42,21 @@ class Classifier(torch.nn.Module):
             torch.nn.BatchNorm1d(cfg.input_dimension),
             torch.nn.Linear(cfg.input_dimension, 512),
             nn.ELU(),
-            torch.nn.BatchNorm1d(512),
+            # torch.nn.BatchNorm1d(512),
 
             torch.nn.Linear(512, 256),
             nn.ELU(),
-            torch.nn.BatchNorm1d(256),
+            # torch.nn.BatchNorm1d(256),
 
-            torch.nn.Linear(256, 128),
+            torch.nn.Linear(256, 256),
             nn.ELU(),
-            torch.nn.BatchNorm1d(128),
+            # torch.nn.BatchNorm1d(256),
 
-            torch.nn.Linear(128, 32),
+            torch.nn.Linear(256, 256),
             nn.ELU(),
-            torch.nn.BatchNorm1d(32),
 
-            nn.Linear(32, cfg.output_dimension)
+            nn.Linear(256, cfg.output_dimension),
+            # nn.Sigmoid()
         ]
 
         #* Initialize the critic
@@ -81,6 +81,7 @@ class Classifier(torch.nn.Module):
             raise NotImplementedError
             
     def forward(self, x):
-        logits = self.critic(x)
-        probabilities = torch.sigmoid(logits)
-        return probabilities.squeeze(1)
+        # logits = self.critic(x)
+        # probabilities = torch.sigmoid(logits)
+        # return probabilities.squeeze(1)
+        return self.critic(x).squeeze(1)
