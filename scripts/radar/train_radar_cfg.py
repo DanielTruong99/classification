@@ -4,7 +4,7 @@ from learning.cfg import TrainCfg
 
 class DataSetCfg:
     class BaseDatasetCfg:
-        batch_size: int = 128
+        batch_size: int = 8192
         is_shuffle: bool = True
         num_workers: int = 4
         input_data_index: List[int] = [0, 1, 2]
@@ -20,16 +20,18 @@ class CriticCfg:
     output_dimension: int = 1
 
     #! Deprecated
-    # architecture: List[Dict] = [
-    #     # {"hidden_dimension": 32, "activation": "elu", "pre_process": "BatchNorm1d"}, 
-    #     {"hidden_dimension": 512, "activation": "elu", "pre_process": "BatchNorm1d"}, 
-    #     {"hidden_dimension": 256, "activation": "elu", "pre_process": "BatchNorm1d"}, 
-    # ]
+    architecture: List[Dict] = [
+        {"hidden_dimension": 512, "activation": "elu", "pre_process": "BatchNorm1d"}, 
+        {"hidden_dimension": 256, "activation": "elu", "pre_process": "BatchNorm1d"}, 
+        {"hidden_dimension": 256, "activation": "elu", "pre_process": "BatchNorm1d"},
+        # {"hidden_dimension": 256, "activation": "elu", "pre_process": "BatchNorm1d"}, 
+    ]
 
 class OptimizerCfg:
     learning_rate: float = 1e-3
     epochs: int = 10000
     optimizer: str = "Adam"
+    weight_decay: float = 1e-5
     criterion: str = "BCE"
 
 class RadarTrainCfg(TrainCfg):

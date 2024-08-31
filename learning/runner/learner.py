@@ -42,7 +42,7 @@ class Learner:
     def _get_optimizer(self, cfg):
         optimizer_cfg = cfg.optimizer
         if optimizer_cfg.optimizer == 'Adam':
-            return torch.optim.Adam(self.model.parameters(), lr=optimizer_cfg.learning_rate)
+            return torch.optim.Adam(self.model.parameters(), lr=optimizer_cfg.learning_rate, weight_decay=optimizer_cfg.weight_decay)
         else:
             raise NotImplementedError('Optimizer not implemented, Currently supported: Adam')
         
@@ -96,8 +96,8 @@ class Learner:
             self.writer.flush()
 
             #* Track best performance, and save the model's state
-            if avg_vloss < best_vloss:
-                best_vloss = avg_vloss
+            if avg_loss < best_vloss:
+                best_vloss = avg_loss
                 model_path = '{}/model_{}_{}'.format(log_dir, timestamp, epoch_number)
                 torch.save(self.model.state_dict(), model_path)
 

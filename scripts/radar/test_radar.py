@@ -11,13 +11,13 @@ import pandas as pd
 
 train_cfg = RadarTrainCfg(); train_cfg.device = 'cpu'
 learner = Learner(train_cfg)
-test_dataset = CSVDataset(os.path.join(train_cfg.dataset.dataset_path, 'test'), train_cfg.dataset.test)
+test_dataset = CSVDataset(os.path.join(train_cfg.dataset.dataset_path, 'train'), train_cfg.dataset.test)
 learner.data_loaders['test'] = DataLoader(
     test_dataset, 
     batch_size=len(test_dataset), 
     shuffle=False
 )
-learner.model.load_state_dict(torch.load('logs/colision_classifier_20240830_173655/model_20240830_173655_2337', map_location=learner.device))
+learner.model.load_state_dict(torch.load('logs/colision_classifier_20240831_012118/model_20240831_012118_9972', map_location=learner.device))
 
 learner.model.eval()
 
