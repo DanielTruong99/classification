@@ -4,7 +4,7 @@ from scripts.radar.train_radar_cfg import RadarTrainCfg
 
 train_cfg = RadarTrainCfg(); train_cfg.device = 'cpu'
 learner = Learner(train_cfg)
-learner.model.load_state_dict(torch.load('logs/colision_classifier_20240820_233543/model_20240820_233543_1253', map_location=learner.device))
+learner.model.load_state_dict(torch.load('logs/colision_classifier_20240831_012118/model_20240831_012118_9972', map_location=learner.device))
 
 #! Compile the model to TorchScript
 example_input = torch.rand(2, 3)
