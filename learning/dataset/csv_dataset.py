@@ -22,7 +22,7 @@ class CSVDataset(Dataset):
             idx = idx.tolist()
 
         input_data = self.data_frame.iloc[idx, self.cfg.input_data_index]
-        label = self.data_frame.iloc[idx, self.cfg.label_data_index[0]]
+        label = self.data_frame.iloc[idx, self.cfg.label_data_index]
         
         sample = {'input': torch.tensor(input_data, dtype=torch.float32), 
                   'label': torch.tensor(label, dtype=torch.float32)}

@@ -4,7 +4,7 @@ from learning.cfg import TrainCfg
 
 class DataSetCfg:
     class BaseDatasetCfg:
-        batch_size: int = 8192
+        batch_size: int = 256
         is_shuffle: bool = True
         num_workers: int = 4
         input_data_index: List[int] = [0, 1, 2, 3, 11, 12, 13, 14, 15, 16] # r1, r2, r3, r4, s_q4, c_q4, s_q5, c_q5, s_q6, c_q6

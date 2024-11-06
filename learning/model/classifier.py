@@ -61,6 +61,5 @@ class Classifier(torch.nn.Module):
             
     def forward(self, x):
         logits = self.critic(x)
-        probabilities = torch.sigmoid(logits)
-        return probabilities.squeeze(1)
+        return logits.squeeze(1)
         # return self.critic(x).squeeze(1)
