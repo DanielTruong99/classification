@@ -1,1 +1,5 @@
 logs
+raw_data/*/*.xlsx
+raw_data/*/*/*.xlsx
+raw_data/*/*.csv
+dataset

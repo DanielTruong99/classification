@@ -54,8 +54,10 @@ class Learner:
             loss_fcn = torch.nn.BCELoss()
         elif optimizer_cfg.criterion == 'MSE':
             loss_fcn = torch.nn.MSELoss()
+        elif optimizer_cfg.criterion == 'BCEWithLogitsLoss':
+            loss_fcn = torch.nn.BCEWithLogitsLoss()
         else:
-            raise NotImplementedError('Criterion not implemented, Currently supported: BCE, MSE') 
+            raise NotImplementedError('Criterion not implemented, Currently supported: BCE, MSE, BCEWithLogitsLoss') 
         
         return loss_fcn
         
