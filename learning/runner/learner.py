@@ -99,7 +99,7 @@ class Learner:
 
             #* Track best performance, and save the model's state
             if avg_loss < best_vloss:
-                best_vloss = avg_loss
+                best_vloss = avg_vloss
                 model_path = '{}/model_{}_{}'.format(log_dir, timestamp, epoch_number)
                 torch.save(self.model.state_dict(), model_path)
 
